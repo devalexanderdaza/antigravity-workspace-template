@@ -147,6 +147,10 @@ O envía un PR para mejorar documentación o código.
 - [@devalexanderdaza](https://github.com/devalexanderdaza) — Primer contribuidor. Implementó herramientas de demo, mejoró la funcionalidad del agente, propuso la hoja de ruta "Agent OS" y completó la integración MCP.
 - [@Subham-KRLX](https://github.com/Subham-KRLX) — Añadió carga dinámica de herramientas y contexto (Fixes #4) y el protocolo de clúster multi‑agente (Fixes #6).
 
+## ⭐ Star History
+
+[![Gráfico de Estrellas](https://api.star-history.com/svg?repos=study8677/antigravity-workspace-template&type=Date)](https://star-history.com/#study8677/antigravity-workspace-template&Date)
+
 ## 📄 Licencia
 
 Licencia MIT. Ver [LICENSE](LICENSE) para detalles.
