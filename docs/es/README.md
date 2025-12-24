@@ -136,7 +136,7 @@ Bienvenemos contribuciones en todos los niveles:
 
 ## 📞 Soporte
 
-- 📖 **Documentación**: ¡Estás leyéndola! (o consulta [README.md](../README.md))
+- 📖 **Documentación**: ¡Estás leyéndola! (o consulta [README.md](../../README.md))
 - 🐛 **Reportes de Bugs**: [GitHub Issues](https://github.com/study8677/antigravity-workspace-template/issues)
 - 💡 **Solicitudes de Características**: [GitHub Discussions](https://github.com/study8677/antigravity-workspace-template/discussions)
 - 👥 **Comunidad**: [Dale una estrella al repo](https://github.com/study8677/antigravity-workspace-template) para mantenerte actualizado
