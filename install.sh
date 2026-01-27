@@ -61,30 +61,20 @@ echo "✅ Dependencies installed"
 # Initialize configuration
 echo "🔧 Setting up configuration..."
 
-# Create .env if it doesn't exist
+# Copy .env.example to .env if it doesn't exist and show a message to the user
 if [ ! -f ".env" ]; then
-    cat > .env << 'EOF'
-# Antigravity Workspace Configuration
-# Copy this file and configure your API keys
-
-# Google Gemini API Key (Required)
-GOOGLE_API_KEY=your_api_key_here
-
-# Optional: OpenAI API Key for alternative LLM
-# OPENAI_API_KEY=your_openai_key_here
-
-# Optional: Model Configuration
-# MODEL_NAME=gemini-2.0-flash-exp
-EOF
+    cp .env.example .env
     echo "✅ Created .env file (please configure your API keys)"
 else
     echo "⚠️  .env file already exists. Skipping creation."
 fi
 
-# Create artifacts directory if it doesn't exist
+# Create artifacts directory if it doesn't exist and show a message to the user
 if [ ! -d "artifacts" ]; then
     mkdir -p artifacts
     echo "✅ Created artifacts directory"
+else
+    echo "⚠️  artifacts directory already exists. Skipping creation."
 fi
 
 echo ""

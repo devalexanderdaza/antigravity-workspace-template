@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "MCP Servers Configuration for Antigravity Agent",
   "servers": [
     {
@@ -7,7 +6,11 @@
       "description": "Access to local filesystem operations",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/tmp"
+      ],
       "enabled": false,
       "env": {}
     },
@@ -16,7 +19,10 @@
       "description": "GitHub API integration for repository management",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
       "enabled": false,
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
@@ -27,7 +33,10 @@
       "description": "PostgreSQL database access",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres"
+      ],
       "enabled": false,
       "env": {
         "POSTGRES_CONNECTION_STRING": "${DATABASE_URL}"
@@ -38,7 +47,10 @@
       "description": "Web search using Brave Search API",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
       "enabled": false,
       "env": {
         "BRAVE_API_KEY": "${BRAVE_API_KEY}"
@@ -49,7 +61,10 @@
       "description": "Persistent memory storage for the agent",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
       "enabled": false,
       "env": {}
     },
@@ -58,7 +73,10 @@
       "description": "Browser automation and web scraping",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
       "enabled": false,
       "env": {}
     },
@@ -67,7 +85,10 @@
       "description": "Slack workspace integration",
       "transport": "stdio",
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-slack"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
       "enabled": false,
       "env": {
         "SLACK_BOT_TOKEN": "${SLACK_BOT_TOKEN}",

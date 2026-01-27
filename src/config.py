@@ -32,7 +32,7 @@ class Settings(BaseSettings):
 
     # Google GenAI Configuration
     GOOGLE_API_KEY: str = ""
-    GEMINI_MODEL_NAME: str = "gemini-2.0-flash-exp"  # Default to latest
+    GEMINI_MODEL_NAME: str = "gemini-2.5-flash"  # Default to latest
 
     # Agent Configuration
     AGENT_NAME: str = "AntigravityAgent"
@@ -53,26 +53,50 @@ class Settings(BaseSettings):
     )
 
     # Memory Configuration
-    MEMORY_FILE: str = "agent_memory.json"
+    # TODO: Implement a more robust memory system
+    MEMORY_FILE: str = "./data/agent_memory.json"
 
     # MCP Configuration
     MCP_ENABLED: bool = Field(default=False, description="Enable MCP integration")
     MCP_SERVERS_CONFIG: str = Field(
-        default="mcp_servers.json", description="Path to MCP servers configuration file"
+        default="./data/mcp_servers.json", description="Path to MCP servers configuration file"
     )
+    # TODO: Implement a more robust MCP connection timeout system
     MCP_CONNECTION_TIMEOUT: int = Field(
         default=30, description="Timeout in seconds for MCP server connections"
     )
+    # TODO: Implement a more robust MCP tool prefix system
     MCP_TOOL_PREFIX: str = Field(
         default="mcp_", description="Prefix for MCP tool names to avoid conflicts"
     )
 
+    # TODO: Implement a more robust workspace system
+    WORKSPACE_DIR: str = Field(
+        default="./workspace", description="Path to workspace directory"
+    )
+
+    # TODO: Implement a more robust model configuration system
+    MODEL_CONFIG: dict = Field(
+        default={
+            "google": {
+                "api_key": "",
+                "model_name": "gemini-2.5-flash",
+            },
+            "openai": {
+                "base_url": "",
+                "api_key": "",
+                "model_name": "gpt-4o-mini",
+            },
+        },
+        description="Model configuration for different LLM providers",
+    )
+
+    # Settings Configuration
     model_config = SettingsConfigDict(
         env_file=str(Path(__file__).resolve().parent.parent / ".env"),
         env_file_encoding="utf-8",
         extra="ignore",
     )
-
 
 # Global settings instance
 settings = Settings()

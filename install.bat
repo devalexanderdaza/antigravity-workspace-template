@@ -81,19 +81,7 @@ echo 🔧 Setting up configuration...
 
 REM Create .env if it doesn't exist
 if not exist ".env" (
-    (
-        echo # Antigravity Workspace Configuration
-        echo # Copy this file and configure your API keys
-        echo.
-        echo # Google Gemini API Key (Required)
-        echo GOOGLE_API_KEY=your_api_key_here
-        echo.
-        echo # Optional: OpenAI API Key for alternative LLM
-        echo # OPENAI_API_KEY=your_openai_key_here
-        echo.
-        echo # Optional: Model Configuration
-        echo # MODEL_NAME=gemini-2.0-flash-exp
-    ) > .env
+    copy .env.example .env
     echo ✅ Created .env file (please configure your API keys)
 ) else (
     echo ⚠️  .env file already exists. Skipping creation.

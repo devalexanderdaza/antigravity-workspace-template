@@ -32,7 +32,6 @@ env.bak/
 venv.bak/
 
 # Antigravity / IDE
-
 .idea/
 .vscode/
 *.swp
@@ -41,3 +40,6 @@ venv.bak/
 logs/
 data/
 .opencode/
+artifacts/
+!artifacts/.gitkeep
+*_memory.json

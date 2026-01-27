@@ -510,16 +510,3 @@ class GeminiAgent:
                 "servers": {},
             }
         return self.mcp_manager.get_status()
-
-
-if __name__ == "__main__":
-    # Allow overriding the task via CLI args or AGENT_TASK env var
-    task = " ".join(sys.argv[1:]).strip() or os.environ.get(
-        "AGENT_TASK", "帮助我查看今天的天气"
-    )
-
-    agent = GeminiAgent()
-    try:
-        agent.run(task)
-    finally:
-        agent.shutdown()
