@@ -30,6 +30,12 @@ class MCPServerConfig(BaseSettings):
 class Settings(BaseSettings):
     """Application settings managed by Pydantic."""
 
+    # Environment Configuration
+    ENV: str = Field(
+        default="development",
+        description="Environment: development, testing, or production"
+    )
+
     # Google GenAI Configuration
     GOOGLE_API_KEY: str = ""
     GEMINI_MODEL_NAME: str = "gemini-2.5-flash"  # Default to latest
@@ -97,6 +103,27 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore",
     )
+
+    def __init__(self, **kwargs):
+        """Initialize settings and apply environment-specific configuration."""
+        super().__init__(**kwargs)
+        self._apply_env_config()
+
+    def _apply_env_config(self) -> None:
+        """Apply environment-specific configuration settings."""
+        from src.env_config import get_env_config
+        
+        try:
+            env_config = get_env_config(self.ENV)
+            
+            # Override settings with environment-specific values if not explicitly set
+            if not self.DEBUG_MODE and hasattr(env_config, 'DEBUG_MODE'):
+                self.DEBUG_MODE = env_config.DEBUG_MODE
+                
+        except ValueError as e:
+            # Log warning but continue with defaults
+            import warnings
+            warnings.warn(f"Environment configuration warning: {e}")
 
     def validate_configuration(self) -> None:
         """Validate configuration values at runtime.
