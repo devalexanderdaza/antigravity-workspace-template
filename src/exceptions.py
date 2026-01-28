@@ -52,7 +52,7 @@ class AntigravityError(Exception):
         context: Optional[Dict[str, Any]] = None,
         recoverable: bool = False,
         suggestion: Optional[str] = None,
-    ):
+    ) -> None:
         """
         Initialize an Antigravity error.
         
@@ -112,8 +112,8 @@ class ConfigurationError(AntigravityError):
         message: str,
         config_key: Optional[str] = None,
         expected_format: Optional[str] = None,
-        **kwargs
-    ):
+        **kwargs: Any
+    ) -> None:
         """
         Initialize configuration error.
         
@@ -150,8 +150,8 @@ class APIError(AntigravityError):
         api_name: Optional[str] = None,
         status_code: Optional[int] = None,
         response: Optional[str] = None,
-        **kwargs
-    ):
+        **kwargs: Any
+    ) -> None:
         """
         Initialize API error.
         
@@ -179,7 +179,7 @@ class APIError(AntigravityError):
 class APIConnectionError(APIError):
     """Raised when unable to connect to an API endpoint."""
 
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message: str, **kwargs: Any) -> None:
         kwargs.setdefault("recoverable", True)
         kwargs.setdefault(
             "suggestion",
@@ -191,7 +191,7 @@ class APIConnectionError(APIError):
 class APIAuthenticationError(APIError):
     """Raised when API authentication fails."""
 
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message: str, **kwargs: Any) -> None:
         kwargs.setdefault("recoverable", True)
         kwargs.setdefault(
             "suggestion",
@@ -203,7 +203,7 @@ class APIAuthenticationError(APIError):
 class APIRateLimitError(APIError):
     """Raised when API rate limit is exceeded."""
 
-    def __init__(self, message: str, retry_after: Optional[int] = None, **kwargs):
+    def __init__(self, message: str, retry_after: Optional[int] = None, **kwargs: Any) -> None:
         context = kwargs.pop("context", {})
         if retry_after:
             context["retry_after"] = retry_after
@@ -220,7 +220,7 @@ class APIRateLimitError(APIError):
 class APITimeoutError(APIError):
     """Raised when an API request times out."""
 
-    def __init__(self, message: str, timeout: Optional[float] = None, **kwargs):
+    def __init__(self, message: str, timeout: Optional[float] = None, **kwargs: Any) -> None:
         context = kwargs.pop("context", {})
         if timeout:
             context["timeout"] = timeout
@@ -248,8 +248,8 @@ class ToolExecutionError(AntigravityError):
         message: str,
         tool_name: Optional[str] = None,
         tool_args: Optional[Dict[str, Any]] = None,
-        **kwargs
-    ):
+        **kwargs: Any
+    ) -> None:
         """
         Initialize tool execution error.
         
@@ -274,7 +274,7 @@ class ToolExecutionError(AntigravityError):
 class ToolNotFoundError(ToolExecutionError):
     """Raised when a requested tool is not found."""
 
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message: str, **kwargs: Any) -> None:
         kwargs.setdefault(
             "suggestion",
             "Check the tool name and ensure all required tools are loaded."
@@ -285,7 +285,7 @@ class ToolNotFoundError(ToolExecutionError):
 class ToolValidationError(ToolExecutionError):
     """Raised when tool arguments fail validation."""
 
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message: str, **kwargs: Any) -> None:
         kwargs.setdefault("recoverable", True)
         kwargs.setdefault(
             "suggestion",
@@ -297,7 +297,7 @@ class ToolValidationError(ToolExecutionError):
 class ToolTimeoutError(ToolExecutionError):
     """Raised when tool execution exceeds timeout."""
 
-    def __init__(self, message: str, timeout: Optional[float] = None, **kwargs):
+    def __init__(self, message: str, timeout: Optional[float] = None, **kwargs: Any) -> None:
         context = kwargs.pop("context", {})
         if timeout:
             context["timeout"] = timeout
@@ -324,8 +324,8 @@ class MCPError(AntigravityError):
         self,
         message: str,
         server_name: Optional[str] = None,
-        **kwargs
-    ):
+        **kwargs: Any
+    ) -> None:
         """
         Initialize MCP error.
         
@@ -347,7 +347,7 @@ class MCPError(AntigravityError):
 class MCPConnectionError(MCPError):
     """Raised when unable to connect to an MCP server."""
 
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message: str, **kwargs: Any) -> None:
         kwargs.setdefault("recoverable", True)
         kwargs.setdefault(
             "suggestion",
@@ -359,7 +359,7 @@ class MCPConnectionError(MCPError):
 class MCPServerError(MCPError):
     """Raised when an MCP server returns an error."""
 
-    def __init__(self, message: str, error_code: Optional[str] = None, **kwargs):
+    def __init__(self, message: str, error_code: Optional[str] = None, **kwargs: Any) -> None:
         context = kwargs.pop("context", {})
         if error_code:
             context["error_code"] = error_code
@@ -371,7 +371,7 @@ class MCPServerError(MCPError):
 class MCPToolError(MCPError):
     """Raised when an MCP tool fails to execute."""
 
-    def __init__(self, message: str, tool_name: Optional[str] = None, **kwargs):
+    def __init__(self, message: str, tool_name: Optional[str] = None, **kwargs: Any) -> None:
         context = kwargs.pop("context", {})
         if tool_name:
             context["tool_name"] = tool_name
@@ -395,8 +395,8 @@ class AntigravityMemoryError(AntigravityError):
         self,
         message: str,
         file_path: Optional[Path] = None,
-        **kwargs
-    ):
+        **kwargs: Any
+    ) -> None:
         """
         Initialize memory error.
         
@@ -418,7 +418,7 @@ class AntigravityMemoryError(AntigravityError):
 class MemoryIOError(AntigravityMemoryError):
     """Raised when memory file I/O operations fail."""
 
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message: str, **kwargs: Any) -> None:
         kwargs.setdefault("recoverable", True)
         kwargs.setdefault(
             "suggestion",
@@ -430,7 +430,7 @@ class MemoryIOError(AntigravityMemoryError):
 class MemoryCorruptionError(AntigravityMemoryError):
     """Raised when memory data is corrupted or invalid."""
 
-    def __init__(self, message: str, **kwargs):
+    def __init__(self, message: str, **kwargs: Any) -> None:
         kwargs.setdefault("recoverable", True)
         kwargs.setdefault(
             "suggestion",
