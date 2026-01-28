@@ -2,6 +2,9 @@ import importlib.util
 import inspect
 from pathlib import Path
 from typing import Dict, Callable, Any, List
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 def load_skills(agent_tools: Dict[str, Callable[..., Any]]) -> str:
     """
@@ -21,10 +24,10 @@ def load_skills(agent_tools: Dict[str, Callable[..., Any]]) -> str:
     skill_docs: List[str] = []
     
     if not skills_dir.exists():
-        print(f"⚠️ Skills directory not found: {skills_dir}")
+        logger.warning(f"⚠️ Skills directory not found: {skills_dir}")
         return ""
 
-    print(f"📦 Scanning for skills in {skills_dir}...")
+    logger.info(f"📦 Scanning for skills in {skills_dir}...")
 
     # Iterate over directories in src/skills/
     for skill_path in skills_dir.iterdir():
@@ -32,7 +35,7 @@ def load_skills(agent_tools: Dict[str, Callable[..., Any]]) -> str:
             continue
             
         skill_name = skill_path.name
-        print(f"   ► Found skill: {skill_name}")
+        logger.info(f"   ► Found skill: {skill_name}")
         
         # 1. Load Tools (tools.py)
         tools_file = skill_path / "tools.py"
@@ -52,7 +55,7 @@ def load_skills(agent_tools: Dict[str, Callable[..., Any]]) -> str:
                             count += 1
                     print(f"     ✓ Loaded {count} tools from tools.py")
             except Exception as e:
-                print(f"     ❌ Failed to load tools: {e}")
+                logger.warning(f"     ❌ Failed to load tools: {e}")
         
         # 2. Load Documentation (SKILL.md)
         doc_file = skill_path / "SKILL.md"
@@ -61,8 +64,8 @@ def load_skills(agent_tools: Dict[str, Callable[..., Any]]) -> str:
                 content = doc_file.read_text(encoding="utf-8").strip()
                 if content:
                     skill_docs.append(f"\n--- SKILL: {skill_name} ---\n{content}")
-                    print(f"     ✓ Loaded documentation from SKILL.md")
+                    logger.debug(f"     ✓ Loaded documentation from SKILL.md")
             except Exception as e:
-                print(f"     ❌ Failed to load docs: {e}")
+                logger.warning(f"     ❌ Failed to load docs: {e}")
                 
     return "\n".join(skill_docs)

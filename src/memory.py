@@ -2,6 +2,9 @@ import json
 import os
 from typing import Any, Callable, Dict, List, Optional
 from src.config import settings
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class MemoryManager:
@@ -28,10 +31,10 @@ class MemoryManager:
                     # Backward compatibility for legacy memory files
                     self._memory = data
                 else:
-                    print(f"Warning: Unexpected memory format in {self.memory_file}. Starting fresh.")
+                    logger.warning(f"Unexpected memory format in {self.memory_file}. Starting fresh.")
                     self._memory = []
             except json.JSONDecodeError:
-                print(f"Warning: Could not decode memory file {self.memory_file}. Starting fresh.")
+                logger.warning(f"Could not decode memory file {self.memory_file}. Starting fresh.")
                 self._memory = []
         else:
             self._memory = []

@@ -25,7 +25,7 @@ def web_search(query: str) -> str:
     # For now, I will return a placeholder string.
     # </thought>
     
-    print(f"DEBUG: Performing web search for '{query}'")
+    logger.debug(f"DEBUG: Performing web search for '{query}'")
     
     # Mock response
     results = f"Search results for: {query}\n1. Result A for {query}...\n2. Result B for {query}..."
@@ -45,7 +45,7 @@ def get_stock_price(ticker: str) -> float:
     # I need to ensure the ticker is uppercase.
     # </thought>
     
-    print(f"DEBUG: Getting stock price for '{ticker}'")
+    logger.debug(f"DEBUG: Getting stock price for '{ticker}'")
     return 150.00 # Mock price
 
 
@@ -127,7 +127,7 @@ def get_weather(city: str) -> dict:
         A dictionary with mock `temperature_c`, `condition`, and `city`.
     """
 
-    print(f"DEBUG: Fetching weather for '{city}' (mock)")
+    logger.debug(f"DEBUG: Fetching weather for '{city}' (mock)")
     # Mocked weather response
     return {
         "city": city,
@@ -151,5 +151,5 @@ def send_email(to: str, body: str) -> str:
         A short confirmation message.
     """
 
-    print(f"DEBUG: Sending email to {to}. Body length: {len(body)}")
+    logger.debug(f"DEBUG: Sending email to {to}. Body length: {len(body)}")
     return f"Email sent to {to} (mock)."

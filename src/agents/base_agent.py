@@ -9,6 +9,9 @@ import os
 from typing import Any, Dict, List, Optional
 from google import genai
 from src.config import settings
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class BaseAgent:
@@ -48,7 +51,7 @@ class BaseAgent:
             try:
                 self.client = genai.Client(api_key=settings.GOOGLE_API_KEY)
             except Exception as e:
-                print(f"⚠️ {role} agent: genai client not initialized: {e}")
+                logger.error(f"⚠️ {role} agent: genai client not initialized: {e}")
                 # Fallback to dummy client
                 class _DummyClient:
                     class _Models:

@@ -11,6 +11,9 @@ from src.agents.router_agent import RouterAgent
 from src.agents.coder_agent import CoderAgent
 from src.agents.reviewer_agent import ReviewerAgent
 from src.agents.researcher_agent import ResearcherAgent
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class MessageBus:
@@ -75,26 +78,26 @@ class SwarmOrchestrator:
     
     def __init__(self):
         """Initialize the swarm with router and worker agents."""
-        print("🪐 Initializing Antigravity Swarm...")
+        logger.info("🪐 Initializing Antigravity Swarm...")
         
         # Initialize message bus
         self.message_bus = MessageBus()
         
         # Initialize router
-        print("   🧭 Creating Router agent...")
+        logger.info("   🧭 Creating Router agent...")
         self.router = RouterAgent()
         
         # Initialize worker agents
-        print("   💻 Creating Coder agent...")
-        print("   🔍 Creating Reviewer agent...")
-        print("   📚 Creating Researcher agent...")
+        logger.info("   💻 Creating Coder agent...")
+        logger.info("   🔍 Creating Reviewer agent...")
+        logger.info("   📚 Creating Researcher agent...")
         self.workers = {
             "coder": CoderAgent(),
             "reviewer": ReviewerAgent(),
             "researcher": ResearcherAgent()
         }
         
-        print(f"✅ Swarm initialized with {len(self.workers)} specialist agents!\n")
+        logger.info(f"✅ Swarm initialized with {len(self.workers)} specialist agents!")
     
     def execute(self, user_task: str, verbose: bool = True) -> str:
         """
@@ -108,19 +111,19 @@ class SwarmOrchestrator:
             Final synthesized result from the swarm.
         """
         if verbose:
-            print(f"🎯 Task Received: {user_task}\n")
-            print("=" * 70)
+            logger.info(f"🎯 Task Received: {user_task}")
+            logger.info("=" * 70)
         
         # Step 1: Router analyzes and creates delegation plan
         if verbose:
-            print("\n🧭 [Router] Analyzing task and creating delegation plan...")
+            logger.info("🧭 [Router] Analyzing task and creating delegation plan...")
         
         delegations = self.router.analyze_and_delegate(user_task)
         
         if verbose:
-            print(f"   📋 Delegation plan created with {len(delegations)} step(s):")
+            logger.info(f"   📋 Delegation plan created with {len(delegations)} step(s):")
             for i, delegation in enumerate(delegations, 1):
-                print(f"      {i}. {delegation['agent']} → {delegation['task']}")
+                logger.info(f"      {i}. {delegation['agent']} → {delegation['task']}")
         
         # Step 2: Execute delegations
         results = []
@@ -129,9 +132,9 @@ class SwarmOrchestrator:
             agent_task = delegation['task']
             
             if verbose:
-                print(f"\n{'=' * 70}")
-                print(f"📤 [Router → {agent_name.capitalize()}] Delegating task {i}/{len(delegations)}")
-                print(f"   Task: {agent_task}")
+                logger.info("=" * 70)
+                logger.info(f"📤 [Router → {agent_name.capitalize()}] Delegating task {i}/{len(delegations)}")
+                logger.info(f"   Task: {agent_task}")
             
             # Record delegation in message bus
             self.message_bus.send("router", agent_name, "task", agent_task)
@@ -140,6 +143,7 @@ class SwarmOrchestrator:
             worker = self.workers.get(agent_name)
             if not worker:
                 result = f"Error: Unknown agent '{agent_name}'"
+                logger.error(f"Unknown agent requested: {agent_name}")
                 results.append(result)
                 continue
             
@@ -148,7 +152,7 @@ class SwarmOrchestrator:
             
             # Execute task
             if verbose:
-                print(f"\n🔧 [{agent_name.capitalize()}] Executing task...")
+                logger.info(f"🔧 [{agent_name.capitalize()}] Executing task...")
             
             result = worker.execute(agent_task, context)
             results.append(result)
@@ -157,19 +161,19 @@ class SwarmOrchestrator:
             self.message_bus.send(agent_name, "router", "result", result)
             
             if verbose:
-                print(f"✅ [{agent_name.capitalize()}] Completed!")
-                print(f"   Result preview: {result[:150]}...")
+                logger.info(f"✅ [{agent_name.capitalize()}] Completed!")
+                logger.info(f"   Result preview: {result[:150]}...")
         
         # Step 3: Router synthesizes final result
         if verbose:
-            print(f"\n{'=' * 70}")
-            print("\n🧭 [Router] Synthesizing final results...")
+            logger.info("=" * 70)
+            logger.info("🧭 [Router] Synthesizing final results...")
         
         final_result = self.router.synthesize_results(delegations, results)
         
         if verbose:
-            print("\n" + "=" * 70)
-            print("🎉 Task Completed!\n")
+            logger.info("=" * 70)
+            logger.info("🎉 Task Completed!")
         
         return final_result
     
