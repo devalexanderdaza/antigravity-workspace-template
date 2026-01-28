@@ -9,10 +9,7 @@ from pathlib import Path
 from typing import Optional
 from urllib.parse import urlparse
 
-
-class ConfigurationError(Exception):
-    """Raised when configuration validation fails."""
-    pass
+from src.exceptions import ConfigurationError
 
 
 def validate_api_key(api_key: str, provider: str = "Google") -> None:
