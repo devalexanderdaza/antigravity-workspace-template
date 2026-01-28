@@ -20,6 +20,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+# .tmp/
 MANIFEST
 
 # Virtual Environments
@@ -39,7 +40,18 @@ venv.bak/
 # Project specific
 logs/
 data/
+.install.sh
 .opencode/
 artifacts/
 !artifacts/.gitkeep
 *_memory.json
+
+# Security - Additional patterns for sensitive files
+*.key
+*.pem
+*.cert
+*.p12
+secrets/
+.secrets/
+credentials/
+.credentials/

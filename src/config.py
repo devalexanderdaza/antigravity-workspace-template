@@ -98,5 +98,47 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    def validate_configuration(self) -> None:
+        """Validate configuration values at runtime.
+        
+        Raises:
+            ConfigurationError: If any configuration value is invalid.
+        """
+        from src.config_validator import (
+            validate_api_key,
+            validate_url,
+            validate_file_path,
+            validate_model_name,
+        )
+        
+        # Validate Google API key if set
+        if self.GOOGLE_API_KEY:
+            validate_api_key(self.GOOGLE_API_KEY, "Google")
+            validate_model_name(self.GEMINI_MODEL_NAME, "Google")
+        
+        # Validate OpenAI configuration if set
+        if self.OPENAI_API_KEY:
+            validate_api_key(self.OPENAI_API_KEY, "OpenAI")
+        
+        if self.OPENAI_BASE_URL:
+            validate_url(self.OPENAI_BASE_URL, "OPENAI_BASE_URL")
+        
+        # Validate file paths
+        if self.MEMORY_FILE:
+            # Create parent directory if it doesn't exist
+            memory_path = Path(self.MEMORY_FILE)
+            memory_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        if self.MCP_SERVERS_CONFIG:
+            # Create parent directory if it doesn't exist
+            mcp_config_path = Path(self.MCP_SERVERS_CONFIG)
+            mcp_config_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        if self.WORKSPACE_DIR:
+            # Create workspace directory if it doesn't exist
+            workspace_path = Path(self.WORKSPACE_DIR)
+            workspace_path.mkdir(parents=True, exist_ok=True)
+
+
 # Global settings instance
 settings = Settings()
